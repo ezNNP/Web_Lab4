@@ -7,6 +7,21 @@
         <element id="directory" name="classes">
           <element id="module-output" name="Web_Lab4" />
         </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="Maven: org.springframework:spring-aop:5.2.1.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-beans:5.2.1.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-context:5.2.1.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-core:5.2.1.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-expression:5.2.1.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-jcl:5.2.1.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-jdbc:5.2.1.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-orm:5.2.1.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-tx:5.2.1.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-web:5.2.1.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-webmvc:5.2.1.RELEASE" />
+          <element id="library" level="project" name="Maven: javax:javaee-api:7.0" />
+          <element id="library" level="project" name="Maven: org.reactivestreams:reactive-streams:1.0.1" />
+        </element>
       </element>
     </root>
   </artifact>
