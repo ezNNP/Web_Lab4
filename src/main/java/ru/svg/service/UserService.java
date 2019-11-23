@@ -1,6 +1,8 @@
 package ru.svg.service;
 
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.data.repository.query.Param;
 import ru.svg.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -63,6 +65,10 @@ public class UserService {
 
     public UserCrudRepository getRepository() {
         return userCrudRepository;
+    }
+
+    public User findUserByLogin(String login) {
+        return userCrudRepository.findUserByLogin(login);
     }
 
     public void setRepository(UserCrudRepository userCrudRepository) {

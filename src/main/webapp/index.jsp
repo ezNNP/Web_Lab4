@@ -11,7 +11,7 @@
     <title>Test</title>
   </head>
   <body>
-  <form action="authentication" method="post">
+  <form action="registration" method="post">
     <input type="text" name="login" value="123">
     <input type="password" name="password" value="123">
     <button type="submit">Отправить</button>
