@@ -1,5 +1,6 @@
 package ru.svg.controllers;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,6 +10,7 @@ import ru.svg.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 @Controller
 public class AuthController {
@@ -17,14 +19,16 @@ public class AuthController {
 
     @RequestMapping(value = "/authentication", method = RequestMethod.POST)
     public void addUser(HttpServletRequest request, HttpServletResponse response) {
+        String json = request.getParameter("json");
         String login = request.getParameter("login");
         String password = request.getParameter("password");
+        HttpSession session = request.getSession();
         if (login != null && password != null) {
             User user = userService.findUserByLogin(login);
             if (user.getPassword().equals(hashPassword(password))) {
-                // заебись
+                session.setAttribute("access", "true");
             } else {
-                // не заебись
+                // NO
             }
         }
     }
@@ -41,6 +45,6 @@ public class AuthController {
     }
 
     private String hashPassword(String password) {
-        return password;
+        return DigestUtils.md5Hex(password);
     }
 }
