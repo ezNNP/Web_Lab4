@@ -35,6 +35,10 @@ public class AuthResponse {
         @SerializedName("NO_AUTH")
         NO_AUTH,
         @SerializedName("NO_REGISTERED")
-        NO_REGISTERED
+        NO_REGISTERED,
+        @SerializedName("EXIT")
+        EXIT,
+        @SerializedName("NO_EXIT")
+        NO_EXIT
     }
 }

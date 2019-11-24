@@ -88,6 +88,30 @@ public class AuthController {
         response.getWriter().print(responseString);
     }
 
+    @RequestMapping(value = "/exit", method = RequestMethod.POST)
+    public void exit(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.setContentType("application/json");XmlWebApplicationContext context = new XmlWebApplicationContext();
+        AuthResponse authResponse = context.getBean("authResponse", AuthResponse.class);
+
+        String json = request.getParameter("json");
+        Gson gson = gsonBuilder.create();
+        JsonObject jsonObject = gson.fromJson(json, JsonObject.class);
+
+        String exit = jsonObject.get("exit").getAsString();
+        if (exit.equals("true")) {
+            request.getSession().removeAttribute("access");
+            authResponse.setAuthResponseType(AuthResponse.AuthResponseType.EXIT);
+            authResponse.setMessage("Вы успешно вышли");
+        } else {
+            authResponse.setAuthResponseType(AuthResponse.AuthResponseType.NO_EXIT);
+            authResponse.setMessage("Неверный JSON запрос");
+        }
+
+        String responseString = gson.toJson(authResponse);
+        System.out.println(responseString);
+        response.getWriter().print(responseString);
+    }
+
     private String hashPassword(String password) {
         return DigestUtils.md5Hex(password);
     }

@@ -1,7 +1,14 @@
 #Формат запросов и ответов: JSON
 
+Название строки запроса: json
+
 ###Запрос для регистрации/авторизации:
 <pre>
+URL:
+    авторизация: /authentication
+    регистрация: /registration
+    
+Method: POST
 {
 	login: login,
 	password: password
@@ -18,6 +25,8 @@
 
 ###Запрос для проверки попадания точки в область:
 <pre>
+URL: /add_point
+Method: POST
 {
 	x: x,
 	y: y,
@@ -35,6 +44,8 @@
 
 ###Запрос для выхода:
 <pre>
+URL: /exit
+Method: POST
 {
 	exit: true
 }
