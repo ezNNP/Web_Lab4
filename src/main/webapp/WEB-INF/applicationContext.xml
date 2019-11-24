@@ -51,6 +51,8 @@
         <property name="entityManagerFactory" ref="entityManagerFactory"/>
     </bean>
 
+    <bean id="gsonBuilder" class="com.google.gson.GsonBuilder" />
+
     <context:annotation-config />
 
     <tx:annotation-driven/>

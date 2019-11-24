@@ -16,7 +16,9 @@ public class Point {
     private boolean in;
     private boolean correct;
 
-    public Point() { }
+    public Point() {
+
+    }
 
     public Point(double x, double y, double r, boolean in, boolean correct) {
         this.x = x;
