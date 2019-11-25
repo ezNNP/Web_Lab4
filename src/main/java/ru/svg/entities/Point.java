@@ -15,17 +15,19 @@ public class Point {
     private double r;
     private boolean in;
     private boolean correct;
+    private int var;
 
     public Point() {
 
     }
 
-    public Point(double x, double y, double r, boolean in, boolean correct) {
+    public Point(double x, double y, double r, boolean in, boolean correct, int var) {
         this.x = x;
         this.y = y;
         this.r = r;
         this.in = in;
         this.correct = correct;
+        this.var = var;
     }
 
     public int getId() {
@@ -74,5 +76,13 @@ public class Point {
 
     public void setCorrect(boolean correct) {
         this.correct = correct;
+    }
+
+    public int getVar() {
+        return var;
+    }
+
+    public void setVar(int var) {
+        this.var = var;
     }
 }
