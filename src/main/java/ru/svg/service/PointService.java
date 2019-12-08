@@ -69,13 +69,4 @@ public class PointService {
 
         return points;
     }
-
-    public List<Point> findAllByVarOrderById(int var) {
-        List<Point> points = new ArrayList<>();
-
-        Iterable<Point> iterable = pointCrudRepository.findAllByVarOrderById(var);
-        iterable.forEach(points::add);
-
-        return points;
-    }
 }
