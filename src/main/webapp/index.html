@@ -9,13 +9,13 @@
 <div id="app">
     <h1>Пошел нахуй {{name}}</h1>
     <input type="text" v-on:input="changeName">
-    <form action="login" method="post">
+    <form action="auth/login" method="post">
         <input type="text" name="login">
         <input type="text" name="password">
         <button type="submit">Логин</button>
     </form>
     <br>
-    <form action="register" method="post">
+    <form action="auth/register" method="post">
         <input type="text" name="login">
         <input type="text" name="password">
         <button type="submit">Регистрация</button>

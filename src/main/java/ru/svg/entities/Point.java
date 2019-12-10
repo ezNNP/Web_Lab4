@@ -20,6 +20,6 @@ public class Point {
     @NonNull private double x;
     @NonNull private double y;
     @NonNull private double r;
-    @NonNull private boolean in;
+    @NonNull private boolean hit;
     @NonNull private boolean correct;
 }
