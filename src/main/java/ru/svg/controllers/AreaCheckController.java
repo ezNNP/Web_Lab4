@@ -1,5 +1,6 @@
 package ru.svg.controllers;
 
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,9 +10,11 @@ import org.springframework.web.bind.annotation.*;
 import ru.svg.entities.Point;
 import ru.svg.service.PointService;
 
+@Slf4j
 @RestController
+@RequestMapping(value = "/points", method = RequestMethod.POST)
 public class AreaCheckController {
-    private static final Logger logger = LoggerFactory.getLogger(AreaCheckController.class);
+    /*private static final Logger logger = LoggerFactory.getLogger(AreaCheckController.class);
 
     private PointService pointService;
 
@@ -38,5 +41,5 @@ public class AreaCheckController {
             return (x > -r) && (y > -r/2);
         }
         return false;
-    }
+    }*/
 }
