@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import ru.svg.security.jwt.JwtConfigurer;
 import ru.svg.security.jwt.JwtTokenProvider;
 
@@ -16,7 +17,6 @@ import ru.svg.security.jwt.JwtTokenProvider;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final JwtTokenProvider jwtTokenProvider;
 
-    private static final String MAIN_PAGE_ENDPOINT = "/points/**";
     private static final String LOGIN_ENDPOINT = "/auth/**";
 
     @Autowired
@@ -39,8 +39,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                     .antMatchers(LOGIN_ENDPOINT).permitAll()
-                    .antMatchers(MAIN_PAGE_ENDPOINT).hasRole("USER")
-                    .anyRequest().authenticated()
+                    .anyRequest().fullyAuthenticated()
+                .and()
+                    .logout()
+                    .permitAll()
+                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "POST"))
                 .and()
                     .apply(new JwtConfigurer(jwtTokenProvider));
     }

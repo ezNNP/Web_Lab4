@@ -2,6 +2,7 @@ package ru.svg.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import ru.svg.entities.Point;
 import ru.svg.repositories.PointRepository;
 import ru.svg.service.PointService;
@@ -9,6 +10,7 @@ import ru.svg.service.PointService;
 import java.util.Collection;
 
 @Slf4j
+@Component("pointServiceImpl")
 public class PointServiceImpl implements PointService {
 
     private final PointRepository pointRepository;

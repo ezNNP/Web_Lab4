@@ -1,35 +1,43 @@
 package ru.svg.controllers;
 
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.svg.entities.Point;
 import ru.svg.service.PointService;
 
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+
 @Slf4j
 @RestController
 @RequestMapping(value = "/points", method = RequestMethod.POST)
 public class AreaCheckController {
-    /*private static final Logger logger = LoggerFactory.getLogger(AreaCheckController.class);
 
-    private PointService pointService;
 
     @Autowired
-    public AreaCheckController(PointService pointService) {
-        this.pointService = pointService;
-    }
+    @Qualifier("pointServiceImpl")
+    private PointService pointService;
 
     @PostMapping(value = "/add_point")
-    public ResponseEntity<?> addPoint(@RequestBody Point point) {
+    public ResponseEntity addPoint(@RequestBody Point point) {
         point.setHit(checkIn(point.getX(), point.getY(), point.getR()));
         point.setCorrect(true);
-        pointService.save(point);
-        logger.info("Point {} is succesfully saved", point);
-        return new ResponseEntity<>(pointService.findAllOrderById(), HttpStatus.OK);
+        Collection<Point> points = pointService.add(point);
+        Map<Object, Object> response = new HashMap<>();
+        response.put("points", points);
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping(value = "/get_points")
+    public ResponseEntity getPoints() {
+        Collection<Point> points = pointService.findAll();
+        Map<Object, Object> response = new HashMap<>();
+        response.put("points", points);
+        return ResponseEntity.ok(response);
     }
 
     private boolean checkIn(double x, double y, double r) {
@@ -41,5 +49,5 @@ public class AreaCheckController {
             return (x > -r) && (y > -r/2);
         }
         return false;
-    }*/
+    }
 }

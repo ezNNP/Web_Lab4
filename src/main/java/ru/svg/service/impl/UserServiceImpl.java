@@ -3,6 +3,7 @@ package ru.svg.service.impl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Component;
 import ru.svg.entities.User;
 import ru.svg.repositories.UserRepository;
 import ru.svg.service.UserService;
@@ -10,6 +11,7 @@ import ru.svg.service.UserService;
 import java.util.List;
 
 @Slf4j
+@Component("userServiceImpl")
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
