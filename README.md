@@ -1,60 +1,65 @@
-#Формат запросов и ответов: JSON
+#Формат запросов и ответов сервера
 
-Название строки запроса: json
-
-###Запрос для регистрации/авторизации:
+###Регистрация
 <pre>
-URL:
-    авторизация: /authentication
-    регистрация: /registration
-    
+curl -H "Content-Type: application/json" -H "Accept: application/json" 
+-d '{"login": "login", "password": "password"}' 
+-X POST http://localhost:8080/auth/register
+
+URL: /auth/register
+Headers:
+    Content-Type: application/json
+    Accept: application/json
 Method: POST
+JSON REQUEST:
 {
-	login: login,
-	password: password
+    "login": "login", "password": "password"
 }
+JSON RESPONSE:
+{"login":"login","status":"REGISTERED"}
+JSON ERROR RESPONSE (duplicate user):
+{"timestamp":"2019-12-13T14:49:00.360+0000","status":403,"error":"Forbidden","message":"Access Denied","path":"/auth/register"}
 </pre>
 
-###Ответ регистрации/авторизации:
+###Авторизация
 <pre>
-{
-	status: Auth/Registered/No_Auth/No_registered
-	message: string
-}
-</pre>
+curl -H "Content-Type: application/json" -H "Accept: application/json" 
+-d '{"login": "login", "password": "password"}' 
+-X POST http://localhost:8080/auth/login
 
-###Запрос для проверки попадания точки в область:
-<pre>
-URL: /add_point
+URL: /auth/login
+Headers:
+    Content-Type: application/json
+    Accept: application/json
 Method: POST
+JSON REQUEST:
 {
-	x: x,
-	y: y,
-	r: r
-	var: 44 (var of lab)
+    "login": "login", "password": "password"
 }
+JSON RESPONSE:
+{"login":"login","status":"OK","token":"JWT_TOKEN"}
+JSON ERROR RESPONSE:
+{"timestamp":"2019-12-13T14:51:32.734+0000","status":403,"error":"Forbidden","message":"Access Denied","path":"/auth/login"}
 </pre>
 
-###Ответ от сервера:
+###Добавление точки
 <pre>
-{
-	Points[] arr, point: x, y, r, in, correct
-}
-</pre>
-
-###Запрос для выхода:
-<pre>
-URL: /exit
+curl -H "Authorization: Bearer_JWT_TOKEN" 
+-H "Accept: application/json" -H "Content-Type: application/json" 
+-d '{"x": 0, "y": 0, "r": 2}' 
+-X POST http://localhost:8080/points/add_point
+URL: /points/add_point
+Headers:
+    Authorization: Bearer_JWT_TOKEN
+    Content-Type: application/json
+    Accept: application/json
 Method: POST
-{
-	exit: true
-}
+JSON REQUEST:
+{"x": 0, "y": 0, "r": 2}
+JSON RESPONSE
+{"points":[{"id":7,"x":0.0,"y":0.0,"r":2.0,"hit":true,"correct":true,"owner":null},{"id":6,"x":0.0,"y":0.0,"r":2.0,"hit":true,"correct":true,"owner":null},{"id":5,"x":0.0,"y":0.0,"r":2.0,"hit":true,"correct":true,"owner":null},{"id":4,"x":0.0,"y":0.0,"r":2.0,"hit":true,"correct":true,"owner":null},{"id":3,"x":0.0,"y":0.0,"r":2.0,"hit":true,"correct":true,"owner":null},{"id":2,"x":0.0,"y":0.0,"r":2.0,"hit":true,"correct":true,"owner":null},{"id":1,"x":0.0,"y":0.0,"r":2.0,"hit":true,"correct":true,"owner":null}]}
+JSON ERROR RESPONSE
+in progress
 </pre>
 
-###Ответ для выхода:
-<pre>
-{
-	status: Exit/No_exit
-	message: string
-}
-</pre>
+IN PROGRESS

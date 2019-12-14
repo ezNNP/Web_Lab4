@@ -4,10 +4,16 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import ru.svg.entities.Point;
+import ru.svg.entities.User;
+import ru.svg.security.jwt.JwtTokenProvider;
 import ru.svg.service.PointService;
+import ru.svg.service.UserService;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -18,15 +24,29 @@ import java.util.Map;
 public class AreaCheckController {
 
 
-    @Autowired
+    private final JwtTokenProvider jwtTokenProvider;
     @Qualifier("pointServiceImpl")
     private PointService pointService;
+    @Qualifier("userServiceImpl")
+    private UserService userService;
+
+    @Autowired
+    public AreaCheckController(JwtTokenProvider jwtTokenProvider, PointService pointService, UserService userService) {
+        this.jwtTokenProvider = jwtTokenProvider;
+        this.pointService = pointService;
+        this.userService = userService;
+    }
 
     @PostMapping(value = "/add_point")
     public ResponseEntity addPoint(@RequestBody Point point) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String login = authentication.getName();
+        User user = userService.findByLogin(login);
         point.setHit(checkIn(point.getX(), point.getY(), point.getR()));
         point.setCorrect(true);
-        Collection<Point> points = pointService.add(point);
+        point.setOwner(user);
+        pointService.add(point);
+        Collection<Point> points = pointService.findAllForUser(user);
         Map<Object, Object> response = new HashMap<>();
         response.put("points", points);
         return ResponseEntity.ok(response);
@@ -35,6 +55,17 @@ public class AreaCheckController {
     @PostMapping(value = "/get_points")
     public ResponseEntity getPoints() {
         Collection<Point> points = pointService.findAll();
+        Map<Object, Object> response = new HashMap<>();
+        response.put("points", points);
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping(value = "/get_user_points")
+    public ResponseEntity getUserPoints() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String login = authentication.getName();
+        User user = userService.findByLogin(login);
+        Collection<Point> points = pointService.findAllForUser(user);
         Map<Object, Object> response = new HashMap<>();
         response.put("points", points);
         return ResponseEntity.ok(response);

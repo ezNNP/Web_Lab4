@@ -22,4 +22,6 @@ public class Point {
     @NonNull private double r;
     @NonNull private boolean hit;
     @NonNull private boolean correct;
+    @ManyToOne
+    private User owner;
 }
