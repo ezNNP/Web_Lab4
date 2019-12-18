@@ -38,6 +38,7 @@ public class AreaCheckController {
     }
 
     @PostMapping(value = "/add_point")
+    @CrossOrigin
     public ResponseEntity addPoint(@RequestBody Point point) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String login = authentication.getName();
@@ -53,6 +54,7 @@ public class AreaCheckController {
     }
 
     @PostMapping(value = "/get_points")
+    @CrossOrigin
     public ResponseEntity getPoints() {
         Collection<Point> points = pointService.findAll();
         Map<Object, Object> response = new HashMap<>();
@@ -61,6 +63,7 @@ public class AreaCheckController {
     }
 
     @PostMapping(value = "/get_user_points")
+    @CrossOrigin
     public ResponseEntity getUserPoints() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String login = authentication.getName();
