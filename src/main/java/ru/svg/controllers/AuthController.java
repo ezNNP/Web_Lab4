@@ -37,7 +37,7 @@ public class AuthController {
 
     @PostMapping("login")
     @CrossOrigin
-    public ResponseEntity login(@RequestBody AuthenticationRequestDto requestDto) throws UsernameNotFoundException {
+    public ResponseEntity<?> login(@RequestBody AuthenticationRequestDto requestDto) throws UsernameNotFoundException {
         try {
             String login = requestDto.getLogin();
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(login, requestDto.getPassword()));
@@ -62,7 +62,7 @@ public class AuthController {
 
     @PostMapping("register")
     @CrossOrigin
-    public ResponseEntity register(@RequestBody AuthenticationRequestDto requestDto) throws BadCredentialsException {
+    public ResponseEntity<?> register(@RequestBody AuthenticationRequestDto requestDto) throws BadCredentialsException {
         String login = requestDto.getLogin();
         User duplicate = userService.findByLogin(login);
 
