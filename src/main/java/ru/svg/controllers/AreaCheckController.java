@@ -18,7 +18,7 @@ import java.util.Map;
 
 @Slf4j
 @RestController
-@RequestMapping(value = "/points", method = RequestMethod.POST)
+@RequestMapping(value = "/points")
 public class AreaCheckController {
 
 
@@ -39,8 +39,12 @@ public class AreaCheckController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String login = authentication.getName();
         User user = userService.findByLogin(login);
-        point.setHit(checkIn(point.getX(), point.getY(), point.getR()));
-        point.setCorrect(true);
+        point.setCorrect(point.getR() > 0);
+        if (point.isCorrect()) {
+            point.setHit(checkIn(point.getX(), point.getY(), point.getR()));
+        } else {
+            point.setHit(false);
+        }
         point.setOwner(user);
         pointService.add(point);
         Map<Object, Object> response = new HashMap<>();
@@ -48,16 +52,14 @@ public class AreaCheckController {
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping(value = "/get_user_points")
+    @GetMapping(value = "/get_user_points")
     @CrossOrigin
-    public ResponseEntity<?> getUserPoints() {
+    public Collection<Point> getUserPoints() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String login = authentication.getName();
         User user = userService.findByLogin(login);
-        Collection<Point> points = pointService.findAllForUser(user);
-        Map<Object, Object> response = new HashMap<>();
-        response.put("points", points);
-        return ResponseEntity.ok(response);
+        return pointService.findAllForUser(user);
+
     }
 
     private boolean checkIn(double x, double y, double r) {
