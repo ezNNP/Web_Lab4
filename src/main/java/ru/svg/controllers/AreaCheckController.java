@@ -12,12 +12,14 @@ import ru.svg.entities.User;
 import ru.svg.service.PointService;
 import ru.svg.service.UserService;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
 @Slf4j
 @RestController
+@CrossOrigin
 @RequestMapping(value = "/points", method = RequestMethod.POST)
 public class AreaCheckController {
 
@@ -35,7 +37,7 @@ public class AreaCheckController {
 
     @PostMapping(value = "/add_point")
     @CrossOrigin
-    public ResponseEntity<?> addPoint(@RequestBody Point point) {
+    public ResponseEntity<?> addPoint(@RequestBody Point point, HttpServletResponse servletResponse) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String login = authentication.getName();
         User user = userService.findByLogin(login);
